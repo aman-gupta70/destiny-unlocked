@@ -73,32 +73,24 @@ export function LeadDialogProvider({ children }: { children: ReactNode }) {
   };
 
   const onSubmit = async (data: FormValues) => {
-    try {
-      // Send to Formspree with timeout
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    // 1. Show THANK YOU FIRST (NO WAITING!)
+    setSubmitted(true);
+    reset();
+    setDate(undefined);
 
-      const response = await fetch("https://formspree.io/f/xkoakerw", {
+    // 2. Try to send form in background (user doesn't wait for this)
+    try {
+      await fetch("https://formspree.io/f/xkoakerw", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
         },
-        signal: controller.signal
       });
-
-      clearTimeout(timeoutId);
-      console.log("Form submitted successfully:", response);
-    } catch (error) {
-      console.error("Error submitting form (but user can still continue):", error);
-      // Don't block the user from seeing the thank you message even if form fails
+    } catch (e) {
+      // Do nothing, user is already happy!
     }
-
-    // Show thank you immediately, don't wait for fetch
-    setSubmitted(true);
-    reset();
-    setDate(undefined);
   };
 
   return (
@@ -186,10 +178,9 @@ export function LeadDialogProvider({ children }: { children: ReactNode }) {
 
                   <Button
                     type="submit"
-                    disabled={isSubmitting}
                     className="btn-glow h-12 w-full rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-base font-semibold text-white hover:from-[#7C3AED] hover:to-[#C084FC]"
                   >
-                    {isSubmitting ? "Submitting…" : "Get My Free Report"}
+                    Get My Free Report
                   </Button>
                   <p className="text-center text-xs text-[#A6A1B8]">
                     We respect your privacy. Your information stays confidential.
