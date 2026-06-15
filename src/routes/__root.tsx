@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+
+const queryClient = new QueryClient();
 
 function NotFoundComponent() {
   return (
@@ -23,16 +25,19 @@ function NotFoundComponent() {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
 });
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
     </QueryClientProvider>
   );
+}
+
+export default function Root() {
+  return <Outlet />;
 }
