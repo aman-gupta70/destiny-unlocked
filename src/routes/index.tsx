@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
@@ -51,64 +50,7 @@ import { LeadDialogProvider, useLeadDialog, whatsappUrl } from "@/components/Lea
 import heroImage from "@/assets/hero-cosmic.jpg";
 import consultantImage from "@/assets/consultant.png";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Astero — Free Personalized Numerology Report & Life Path Insights" },
-      {
-        name: "description",
-        content:
-          "Discover what your numbers reveal. Get a FREE personalized numerology report on your career, relationships, finances and life path from a trusted consultant.",
-      },
-      { name: "keywords", content: "numerology, free numerology report, life path number, career guidance, personalized numerology" },
-      { property: "og:title", content: "Astero — Free Personalized Numerology Report" },
-      {
-        property: "og:description",
-        content:
-          "Uncover insights about your strengths, life path, relationships, career potential and future opportunities — free.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Astero — Free Personalized Numerology Report" },
-      {
-        name: "twitter:description",
-        content: "Free personalized numerology insights for career, relationships and life direction.",
-      },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ProfessionalService",
-          name: "Astero Numerology",
-          description:
-            "Personalized numerology consulting for career, relationships, finances and life direction.",
-          areaServed: "Worldwide",
-          serviceType: "Numerology Consultation",
-          priceRange: "Free initial report",
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: FAQS.map((f) => ({
-            "@type": "Question",
-            name: f.q,
-            acceptedAnswer: { "@type": "Answer", text: f.a },
-          })),
-        }),
-      },
-    ],
-  }),
-  component: IndexPage,
-});
-
-function IndexPage() {
+export default function IndexPage() {
   return (
     <LeadDialogProvider>
       <PageShell />
@@ -836,7 +778,7 @@ function FloatingActions() {
 
 function StickyMobileCTA() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-[#090611]/95 p-3 backdrop-blur-xl sm:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/5 bg-[#090611]/95 p-3 backdrop-blur-xl sm:hidden">
       <CTAButton className="w-full">
         Get My Free Report <ArrowRight className="h-4 w-4" />
       </CTAButton>
