@@ -1,8 +1,7 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": ".vercel/output",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
   "framework": "tanstack-start",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
+  "outputDirectory": ".vercel/output"
 }
