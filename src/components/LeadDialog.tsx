@@ -74,21 +74,28 @@ export function LeadDialogProvider({ children }: { children: ReactNode }) {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      // Send to Formspree
+      // Send to Formspree with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const response = await fetch("https://formspree.io/f/xkoakerw", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
-        }
+        },
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
+      console.log("Form submitted successfully:", response);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting form (but user can still continue):", error);
+      // Don't block the user from seeing the thank you message even if form fails
     }
 
-    // Show thank you
-    await new Promise((r) => setTimeout(r, 700));
+    // Show thank you immediately, don't wait for fetch
     setSubmitted(true);
     reset();
     setDate(undefined);
